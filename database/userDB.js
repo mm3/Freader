@@ -1,13 +1,13 @@
-var mongoose = require('mongoose');
+var dbproxy = require('./dbproxy.js');
 
-var userSchema = mongoose.Schema({
+var userSchema = dbproxy.db.Schema({
 	email: String,
 	password: String,
-	_feeds: [{type: mongoose.Schema.Types.ObjectId, ref: 'Feed'}],
+	_feeds: [{type: dbproxy.db.Schema.Types.ObjectId, ref: 'Feed'}],
 	creationDate: { type: Date, default: Date.now }
 });
 
-var User = mongoose.model('User', userSchema);
+var User = dbproxy.db.model('User', userSchema);
 exports.model = User;
 
 exports.create = function(email, password, callback) {
