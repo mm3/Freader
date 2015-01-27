@@ -1,11 +1,11 @@
 var config = require(__dirname + '/../config.js');
-var mongoose = require('mongoose');
+var dbproxy = require('./dbproxy.js');
 var User = require(__dirname + '/userDB.js');
 var Scrapper = require(__dirname + '/../scrapper.js');
 
-var feedSchema = mongoose.Schema({
+var feedSchema = dbproxy.db.Schema({
 	url: String,
-	_owners: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+	_owners: [{type: dbproxy.db.Schema.Types.ObjectId, ref: 'User'}],
 	creationDate: { type: Date, default: Date.now },
 	lastUpdate: { type: Date, default: 0 },
 	updateFrequence: Number,
@@ -20,7 +20,7 @@ var feedSchema = mongoose.Schema({
 	}]
 });
 
-var Feed = mongoose.model('Feed', feedSchema);
+var Feed = dbproxy.db.model('Feed', feedSchema);
 exports.model = Feed;
 
 exports.add = function(user, url, callback) {
