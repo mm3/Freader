@@ -1,12 +1,12 @@
 var config = require(__dirname + '/../config.js');
-var mongoose = require('mongoose');
+var dbproxy = require('./dbproxy.js');
 
 
 exports.connect = function(callback) {
 	console.log("Connecting to database...");
-	mongoose.connect(config.database);
+	dbproxy.connect(config.database);
 
-	db = mongoose.connection;
+	db = dbproxy.connection;
 	db.on('error', console.error.bind(console, 'Connection error:'));
 	db.once('open', function() {
 		console.log("Connected !");
